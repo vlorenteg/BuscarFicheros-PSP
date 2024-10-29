@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class BuscarFicheros extends JFrame {
+	private static final long serialVersionUID = 1L; 
 	//Componentes
     private JTextField extensionField; //Cuadro de texto resultados
     private JTextArea resultArea;
@@ -44,7 +45,7 @@ public class BuscarFicheros extends JFrame {
         bottomPanel.add(extensionField, BorderLayout.CENTER);
         bottomPanel.add(searchButton, BorderLayout.EAST);
 
-        // Añadir componentes a la ventana
+        //Añadir componentes a la ventana
         add(new JScrollPane(resultArea), BorderLayout.CENTER); //Área de resultados ocupa el centro
         add(bottomPanel, BorderLayout.SOUTH); //Campo de texto y botón en la parte inferior
 
@@ -59,7 +60,7 @@ public class BuscarFicheros extends JFrame {
         });
     }
 
-    // Método para buscar archivos
+    //Método para buscar archivos
     private void buscarArchivos() {
         resultArea.setText(""); // Limpiar el área de texto
         String extension = extensionField.getText().trim(); //elimina los espacios innecessarios
@@ -71,7 +72,7 @@ public class BuscarFicheros extends JFrame {
 
         ArrayList<File> foundFiles = new ArrayList<>(); //Crea una lista donde se almacenarán los archivos encontrados
 
-        // Buscar archivos en todas las unidades de disco
+        //Buscar archivos en todas las unidades de disco
         for (File root : File.listRoots()) {
             buscarEnDirectorio(root, extension, foundFiles);
         }
@@ -81,13 +82,14 @@ public class BuscarFicheros extends JFrame {
         if (foundFiles.isEmpty()) {
             resultArea.append("No se encontraron archivos con la extensión: " + extension);
         } else {
+        	//si los encuentra devuelve la ruta
             for (File file : foundFiles) {
-                resultArea.append(file.getAbsolutePath() + "\n");
+                resultArea.append(file.getAbsolutePath() + "\n"); //devuelve la ruta completa del archivo (formato solicitado)
             }
         }
     }
 
-    // Método recursivo para buscar en directorios
+    //Método recursivo para buscar en directorios
     private void buscarEnDirectorio(File dir, String extension, ArrayList<File> foundFiles) {
     	//verifica si exixte el directorio y obtiene la lista de archivos dentro
         if (dir != null && dir.isDirectory() && dir.canRead()) {
